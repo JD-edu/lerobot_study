@@ -95,7 +95,7 @@ def calibrate_single_motor_shoulder_pan(
 
 if __name__ == "__main__":
     calibrate_single_motor_shoulder_pan(
-        port="/dev/ttyUSB1",
+        port="/dev/ttyUSB0",
         motor_id=6,
         out_json_path="./shoulder_pan_calibration_follower.json",
     )

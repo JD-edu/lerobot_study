@@ -24,7 +24,7 @@ def norm_to_radian(norm, rad_range=(-2.9, 2.9)):
     return ((norm + 100.0) / 200.0) * (rad_range[1] - rad_range[0]) + rad_range[0]
 
 # --- [2] MuJoCo 설정 및 초기화 ---
-xml_path = "scene.xml"
+xml_path = "lift_cube_calibration.xml"
 model = mj.MjModel.from_xml_path(xml_path)
 data = mj.MjData(model)
 

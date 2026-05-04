@@ -50,7 +50,7 @@ class MiniFeetechDriver:
 
 # --- 실행 예시 ---
 if __name__ == "__main__":
-    driver = MiniFeetechDriver(port='/dev/ttyUSB1') # 본인의 포트에 맞게 수정
+    driver = MiniFeetechDriver(port='/dev/ttyUSB0') # 본인의 포트에 맞게 수정
     
     MOTOR_ID = 1
     driver.set_torque(MOTOR_ID, True)

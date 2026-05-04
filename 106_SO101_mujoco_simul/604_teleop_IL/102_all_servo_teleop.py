@@ -30,7 +30,7 @@ JOINT_MAPPING = [
 ]
 
 # --- [2] MuJoCo 설정 및 초기화 ---
-xml_path = "scene.xml"
+xml_path = "lift_cube_calibration.xml"
 model = mj.MjModel.from_xml_path(xml_path)
 data = mj.MjData(model)
 
@@ -94,10 +94,15 @@ while not glfw.window_should_close(window):
             # qpos와 ctrl 인덱스는 보통 XML의 순서를 따릅니다 (0~5)
             qpos_idx = model.jnt_qposadr[mj_jnt_id]
             qvel_idx = model.jnt_dofadr[mj_jnt_id]
-            
-            # 실제 제어는 data.ctrl[i]에 직접 입력 (actuator 인덱스 i)
+        
             qpos_curr = data.qpos[qpos_idx]
             qvel_curr = data.qvel[qvel_idx]
+            if j_name == "gripper":
+                # 그리퍼는 블록을 꽉 쥐어야 하므로 매우 높은 Kp(1000)를 사용하여 목표 각도까지 강하게 밀어붙입니다.
+                torque = 1000.0 * (target_rad - qpos_curr) - 5.0 * qvel_curr
+            else:
+                # 나머지 관절은 기존 설정대로 부드럽게 움직입니다.
+                torque = kp * (target_rad - qpos_curr) - kd * qvel_curr
             
             torque = kp * (target_rad - qpos_curr) + kd * (0.0 - qvel_curr)
             data.ctrl[i] = torque

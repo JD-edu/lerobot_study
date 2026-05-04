@@ -5,6 +5,8 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 import os
+from torchsummary import summary
+
 
 # 개선된 MiniVGGNet: Dropout 비중 강화
 class MiniVGGNet(nn.Module):
@@ -69,6 +71,7 @@ if __name__ == '__main__':
     train_loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
     
     model = MiniVGGNet(num_classes=len(dataset.classes)).to(device)
+    summary(model, input_size=(3, 64, 64))
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
